@@ -21,7 +21,7 @@ const CH_ACCESS_TOKEN = process.env.LINE_CHANNEL_ACCESS_TOKEN;
 const USER_ID         = process.env.LINE_USER_ID;
 const PUSH_PATH       = '/v2/bot/message/multicast';
 const SIGNATURE       = crypto.createHmac('sha256', CH_SECRET);
-const PORT            = 3000;
+const PORT            = process.env.PORT || 3000;
 const pushClient = (userId, SendMessageObject) => {
     let postDataStr = JSON.stringify({ to: userId, messages: SendMessageObject });
     let options = {
