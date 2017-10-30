@@ -46,6 +46,31 @@ app.post('/callback', (req, res) => {
   res.send('OK')
 });
 
+
+const TARGET = ['1549889018','2968069742','864400939125415936','92230963'];
+var stream = tw.stream('statuses/filter', { track :'1549889018',follow :'2968069742',follow :'864400939125415936',follow :'92230963'});
+stream.on('data', function (data,err){
+  if(TARGET.indexOf(data.user.id_str) >= 0) {
+        const options = {
+          method: 'POST',
+          uri   : 'https://api.line.me/v2/bot/message/multicast',
+          body  : {
+            messages  : [{
+              type : 'text',
+              text : data.text
+            }]
+          },
+          auth: {
+            bearer: CH_ACCESS_TOKEN
+          },
+          json: true
+        }
+        request(options, (err, response, body) => {
+          console.log(JSON.stringify(response))
+        });
+  }
+});
+
 app.listen(process.env.PORT || 3000, () => {
   console.log('STARTING on PORT:' + process.env.PORT)
 });
