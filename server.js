@@ -58,8 +58,8 @@ const pushClient = (userId, SendMessageObject) => {
 };
 
 // Get Official Account's Tweet
-const TARGET = ['1549889018','2968069742','864400939125415936']
-var stream = tw.stream('statuses/filter', { follow :'1549889018',follow :'2968069742',follow :'864400939125415936'});
+const TARGET = ['1549889018','2968069742','864400939125415936','500129008']
+var stream = tw.stream('statuses/filter', { follow :'1549889018',follow :'2968069742',follow :'864400939125415936',follow :'500129008'});
 stream.on('data', function (data,err){
   if(TARGET.indexOf(data.user.id_str) >= 0) {
         let PushSendMessageObject = [{
