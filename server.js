@@ -6,7 +6,6 @@ const crypto = require('crypto');
 const Twitter = require('twitter');
 
 // TWITTER SETTING
-const Twitter = require('twitter');
 const tw = new Twitter({
   consumer_key:        process.env.TWITTER_CONSUMER_KEY,
   consumer_secret:     process.env.TWITTER_CONSUMER_SECRET,
@@ -22,6 +21,7 @@ const USER_ID         = process.env.LINE_USER_ID;
 const PUSH_PATH       = '/v2/bot/message/multicast';
 const SIGNATURE       = crypto.createHmac('sha256', CH_SECRET);
 const PORT            = process.env.PORT || 3000;
+
 const pushClient = (userId, SendMessageObject) => {
     let postDataStr = JSON.stringify({ to: userId, messages: SendMessageObject });
     let options = {
