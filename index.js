@@ -2,6 +2,7 @@
 const express = require('express')
 const request = require('request')
 const bodyParser = require('body-parser')
+const Twitter = require('twitter');
 
 // LINE SETTING
 const CH_SECRET       = process.env.LINE_CHANNEL_SECRET;
@@ -31,7 +32,7 @@ app.post('/callback', (req, res) => {
       replyToken: req.body.events[0].replyToken,
       messages  : [{
         type : 'text',
-        text : "HELLO TENTACLE!!"
+        text : 'HELLO TENTACLE!!'
       }]
     },
     auth: {
