@@ -1,7 +1,7 @@
 // IMPORT MODULES
-const express = require('express')
-const request = require('request')
-const bodyParser = require('body-parser')
+const express = require('express');
+const request = require('request');
+const bodyParser = require('body-parser');
 const Twitter = require('twitter');
 
 // LINE SETTING
@@ -18,11 +18,11 @@ const TW = new Twitter({
 });
 
 // NEW EXPRESS
-const app = express()
-app.use(bodyParser.json())
+const app = express();
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
-}))
+}));
 
 app.post('/callback', (req, res) => {
   const options = {
@@ -42,10 +42,10 @@ app.post('/callback', (req, res) => {
   }
   request(options, (err, response, body) => {
     console.log(JSON.stringify(response))
-  })
+  });
   res.send('OK')
-})
+});
 
 app.listen(process.env.PORT || 3000, () => {
   console.log('STARTING on PORT:' + process.env.PORT)
-})
+});
