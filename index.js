@@ -36,7 +36,7 @@ var tweet_log_ff14 = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dos
 // LINE REPLY
 app.post('/callback', (req, res) => {
   var userText = req.body['events'][0]['message']['text'];
-  var tweet_log = [''];
+  var tweet_log = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
   
   // SWITCH TITLE
   switch (userText){
