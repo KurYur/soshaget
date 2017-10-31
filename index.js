@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 var targetUser = [];
-var tweetlog = ['ツイートなし','ツイートなし','ツイートなし','ツイートなし','ツイートなし']
+var tweetlog = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.']
 
 app.post('/callback', (req, res) => {
   var userId = req.body['events'][0]['source']['userId'];
