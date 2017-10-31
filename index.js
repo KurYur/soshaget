@@ -29,7 +29,7 @@ var targetUser = [];
 app.post('/callback', (req, res) => {
   var userId = req.body['events'][0]['source']['userId'];
   if(targetUser.indexOf(userId) == -1) {
-    targetUser.push(user_id);
+    targetUser.push(userId);
   }
   const replyOptions = {
     method: 'POST',
