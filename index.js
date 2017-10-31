@@ -24,14 +24,40 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
-var targetUser = [];
-var tweetlog = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.']
+// TWEET LOGS AND TARGET ACCOUNT
+const TARGET       = [FGO_TWITTER_ID,AZR_TWITTER_ID,GBF_TWITTER_ID,FF14_TWITTER_ID];
+const OFFICIAL_URL = [FGO_OFFICAL_URL,AZR_OFFICAL_URL,GBF_OFFICAL_URL,FF14_OFFICAL_URL];
+var tweet_log_all  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
+var tweet_log_fgo  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
+var tweet_log_azr  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
+var tweet_log_gbf  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
+var tweet_log_ff14 = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
 
+// LINE REPLY
 app.post('/callback', (req, res) => {
-  var userId = req.body['events'][0]['source']['userId'];
-  if(targetUser.indexOf(userId) == -1) {
-    targetUser.push(userId);
+  var userText = req.body['events'][0]['message']['text'];
+  var tweet_log;
+  
+  // SWITCH TITLE
+  switch (userText){
+    case OFFICIAL_URL[0]:
+      tweet_log = tweet_log_fgo;
+      break;
+    case OFFICIAL_URL[1]:
+      tweet_log = tweet_log_azr;
+      break;
+    case OFFICIAL_URL[2]:
+      tweet_log = tweet_log_gbf;
+      break;
+    case OFFICIAL_URL[3]:
+      tweet_log = tweet_log_ff14;
+      break;
+    default:
+      tweet_log = tweet_log_all;
+      break;
   }
+  
+  // SETTING MESSAGE
   const replyOptions = {
     method: 'POST',
     uri   : 'https://api.line.me/v2/bot/message/reply',
@@ -40,23 +66,23 @@ app.post('/callback', (req, res) => {
       messages  : [
         {
           type : 'text',
-          text : tweetlog[0]
+          text : tweet_log[0]
         },
         {
           type : 'text',
-          text : tweetlog[1]
+          text : tweet_log[1]
         },
         {
           type : 'text',
-          text : tweetlog[2]
+          text : tweet_log[2]
         },
         {
           type : 'text',
-          text : tweetlog[3]
+          text : tweet_log[3]
         },
         {
           type : 'text',
-          text : tweetlog[4]
+          text : tweet_log[4]
         }
       ]
     },
@@ -71,14 +97,34 @@ app.post('/callback', (req, res) => {
   res.send('OK');
 });
 
-const TARGET = ['1549889018','2968069742','864400939125415936','500129008'];
-var stream = TW.stream('statuses/filter', {follow :'1549889018',follow :'2968069742',follow :'864400939125415936',follow :'500129008'});
+// GET TWEET
+var stream = TW.stream('statuses/filter', {follow :TARGET[0],follow :TARGET[1],follow :TARGET[2],follow :TARGET[3]});
 stream.on('data', function (data,err){
   if(TARGET.indexOf(data.user.id_str) >= 0) {
-    tweetlog.unshift(data.user.name + '\n' + 'https://twitter.com/' + data.user.screen_name + '\n' + data.text);
+  
+    // INTO LOG(ALL)
+    tweet_log_all.unshift(data.user.name + '\n' + 'https://twitter.com/' + data.user.screen_name + '\n' + data.text);
+    
+    // INTO LOG(TITLE)
+    switch (data.user.id_str){
+      case TARGET[0]:
+        tweet_log_fgo.unshift(data.user.name + '\n' + 'https://twitter.com/' + data.user.screen_name + '\n' + data.text);
+        break;
+      case TARGET[1]:
+        tweet_log_azr.unshift(data.user.name + '\n' + 'https://twitter.com/' + data.user.screen_name + '\n' + data.text);
+        break;
+      case TARGET[2]:
+        tweet_log_gbf.unshift(data.user.name + '\n' + 'https://twitter.com/' + data.user.screen_name + '\n' + data.text);
+        break;
+      case TARGET[3]:
+        tweet_log_ff14.unshift(data.user.name + '\n' + 'https://twitter.com/' + data.user.screen_name + '\n' + data.text);
+        break;
+    }
+    
   }
 });
 
+// PORT BINDING
 app.listen(process.env.PORT || 3000, () => {
   console.log('STARTING on PORT:' + process.env.PORT)
 });
