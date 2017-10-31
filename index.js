@@ -28,7 +28,7 @@ var targetUser = [];
 
 app.post('/callback', (req, res) => {
   var user_id = req.body['events'][0]['source']['userId'];
-  if(targetUser.indexOf(user_id) >= 0) {
+  if(targetUser.indexOf(user_id) == -1) {
     targetUser.push(user_id);
   }
   const replyOptions = {
