@@ -62,26 +62,23 @@ const TARGET = ['1549889018','2968069742','864400939125415936','92230963'];
 var stream = TW.stream('statuses/filter', { track :'1549889018',follow :'2968069742',follow :'864400939125415936',follow :'92230963'});
 stream.on('data', function (data,err){
   if(TARGET.indexOf(data.user.id_str) >= 0) {
-    function(req, res){
-      const pushOptions = {
-        method: 'POST',
-        uri   : 'https://api.line.me/v2/bot/multicast/',
-        body  : {
-          to        : targetUser,
-          messages  : [{
-            type : 'text',
-            text : data.text
-          }]
-        },
-        auth: {
-          bearer: CH_ACCESS_TOKEN
-        },
-        json: true
-      }
-      request(pushOptions, (err, response, body) => {
-        console.log(JSON.stringify(response))
-      });
-      res.send('OK');
+    const pushOptions = {
+      method: 'POST',
+      uri   : 'https://api.line.me/v2/bot/multicast/',
+      body  : {
+        to        : targetUser,
+        messages  : [{
+          type : 'text',
+          text : data.text
+        }]
+      },
+      auth: {
+        bearer: CH_ACCESS_TOKEN
+      },
+      json: true
     }
+    request(pushOptions, (err, response, body) => {
+      console.log(JSON.stringify(response))
+    });
   }
 });
