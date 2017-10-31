@@ -25,8 +25,8 @@ app.use(bodyParser.urlencoded({
 }));
 
 // TWEET LOGS AND TARGET ACCOUNT
-const TARGET       = [FGO_TWITTER_ID,AZR_TWITTER_ID,GBF_TWITTER_ID,FF14_TWITTER_ID];
-const OFFICIAL_URL = [FGO_OFFICIAL_URL,AZR_OFFICIAL_URL,GBF_OFFICIAL_URL,FF14_OFFICIAL_URL];
+const TARGET       = [process.env.FGO_TWITTER_ID,process.env.AZR_TWITTER_ID,process.env.GBF_TWITTER_ID,process.env.FF14_TWITTER_ID];
+const OFFICIAL_URL = [process.env.FGO_OFFICIAL_URL,process.env.AZR_OFFICIAL_URL,process.env.GBF_OFFICIAL_URL,process.env.FF14_OFFICIAL_URL];
 var tweet_log_all  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
 var tweet_log_fgo  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
 var tweet_log_azr  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
