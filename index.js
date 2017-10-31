@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({
 
 // TWEET LOGS AND TARGET ACCOUNT
 const TARGET       = [FGO_TWITTER_ID,AZR_TWITTER_ID,GBF_TWITTER_ID,FF14_TWITTER_ID];
-const OFFICIAL_URL = [FGO_OFFICAL_URL,AZR_OFFICAL_URL,GBF_OFFICAL_URL,FF14_OFFICAL_URL];
+const OFFICIAL_URL = [FGO_OFFICIAL_URL,AZR_OFFICIAL_URL,GBF_OFFICIAL_URL,FF14_OFFICIAL_URL];
 var tweet_log_all  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
 var tweet_log_fgo  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
 var tweet_log_azr  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
@@ -36,7 +36,7 @@ var tweet_log_ff14 = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dos
 // LINE REPLY
 app.post('/callback', (req, res) => {
   var userText = req.body['events'][0]['message']['text'];
-  var tweet_log;
+  var tweet_log = [''];
   
   // SWITCH TITLE
   switch (userText){
