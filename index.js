@@ -25,6 +25,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 var targetUser = [];
+var tweetlog = ['ツイートなし','ツイートなし','ツイートなし','ツイートなし','ツイートなし']
 
 app.post('/callback', (req, res) => {
   var userId = req.body['events'][0]['source']['userId'];
@@ -36,10 +37,28 @@ app.post('/callback', (req, res) => {
     uri   : 'https://api.line.me/v2/bot/message/reply',
     body  : {
       replyToken: req.body.events[0].replyToken,
-      messages  : [{
-        type : 'text',
-        text : 'HELLO TENTACLE!!'
-      }]
+      messages  : [
+        {
+          type : 'text',
+          text : tweetlog[0]
+        },
+        {
+          type : 'text',
+          text : tweetlog[1]
+        },
+        {
+          type : 'text',
+          text : tweetlog[2]
+        },
+        {
+          type : 'text',
+          text : tweetlog[3]
+        },
+        {
+          type : 'text',
+          text : tweetlog[4]
+        }
+      ]
     },
     auth: {
       bearer: CH_ACCESS_TOKEN
@@ -59,26 +78,9 @@ app.listen(process.env.PORT || 3000, () => {
 
 
 const TARGET = ['1549889018','2968069742','864400939125415936','92230963'];
-var stream = TW.stream('statuses/filter', { track :'1549889018',follow :'2968069742',follow :'864400939125415936',follow :'92230963'});
+var stream = TW.stream('statuses/filter', {follow :'1549889018',follow :'2968069742',follow :'864400939125415936',follow :'92230963'});
 stream.on('data', function (data,err){
   if(TARGET.indexOf(data.user.id_str) >= 0) {
-    const pushOptions = {
-      method: 'POST',
-      uri   : 'https://api.line.me/v2/bot/multicast/',
-      body  : {
-        to        : targetUser,
-        messages  : [{
-          type : 'text',
-          text : data.text
-        }]
-      },
-      auth: {
-        bearer: CH_ACCESS_TOKEN
-      },
-      json: true
-    }
-    request(pushOptions, (err, response, body) => {
-      console.log(JSON.stringify(response))
-    });
+    tweetlog.unshift(data.text);
   }
 });
