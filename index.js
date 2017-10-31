@@ -71,8 +71,8 @@ app.post('/callback', (req, res) => {
   res.send('OK');
 });
 
-const TARGET = ['1549889018','2968069742','864400939125415936','92230963'];
-var stream = TW.stream('statuses/filter', {follow :'1549889018',follow :'2968069742',follow :'864400939125415936',follow :'92230963'});
+const TARGET = ['1549889018','2968069742','864400939125415936','500129008'];
+var stream = TW.stream('statuses/filter', {follow :'1549889018',follow :'2968069742',follow :'864400939125415936',follow :'500129008'});
 stream.on('data', function (data,err){
   if(TARGET.indexOf(data.user.id_str) >= 0) {
     tweetlog.unshift(data.text);
