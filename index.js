@@ -71,16 +71,14 @@ app.post('/callback', (req, res) => {
   res.send('OK');
 });
 
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log('STARTING on PORT:' + process.env.PORT)
-});
-
-
 const TARGET = ['1549889018','2968069742','864400939125415936','92230963'];
 var stream = TW.stream('statuses/filter', {follow :'1549889018',follow :'2968069742',follow :'864400939125415936',follow :'92230963'});
 stream.on('data', function (data,err){
   if(TARGET.indexOf(data.user.id_str) >= 0) {
     tweetlog.unshift(data.text);
   }
+});
+
+app.listen(process.env.PORT || 3000, () => {
+  console.log('STARTING on PORT:' + process.env.PORT)
 });
