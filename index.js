@@ -28,10 +28,10 @@ app.use(bodyParser.urlencoded({
 const TARGET       = [process.env.FGO_TWITTER_ID,process.env.AZR_TWITTER_ID,process.env.GBF_TWITTER_ID,process.env.FF14_TWITTER_ID];
 const OFFICIAL_URL = [process.env.FGO_OFFICIAL_URL,process.env.AZR_OFFICIAL_URL,process.env.GBF_OFFICIAL_URL,process.env.FF14_OFFICIAL_URL];
 var tweet_log_all  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
-var tweet_log_fgo  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
-var tweet_log_azr  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
-var tweet_log_gbf  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
-var tweet_log_ff14 = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
+var tweet_log_fgo  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist0.'];
+var tweet_log_azr  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist1.'];
+var tweet_log_gbf  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist2.'];
+var tweet_log_ff14 = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist3.'];
 
 // LINE REPLY
 app.post('/callback', (req, res) => {
