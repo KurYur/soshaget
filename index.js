@@ -98,7 +98,7 @@ app.post('/callback', (req, res) => {
 });
 
 // GET TWEET
-var stream = TW.stream('statuses/filter', {follow :TARGET[0],follow :TARGET[1],follow :TARGET[2],follow :TARGET[3]});
+var stream = TW.stream('statuses/filter', {follow :TARGET});
 stream.on('data', function (data,err){
   if(TARGET.indexOf(data.user.id_str) >= 0) {
   
