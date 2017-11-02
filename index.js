@@ -33,64 +33,93 @@ var tweet_log_azr  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dos
 var tweet_log_gbf  = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist2.'];
 var tweet_log_ff14 = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist3.'];
 
+// MESSEAGE TEXT
+const STATUS = '状態：試験運用中\n';
+const ABOUT = 'このLINEBOTはTwitter上から特定のゲームの公式アカウントのツイートを取得し、最新5件を表示するBOTです。'
+const HINT = 'リッチメニューからゲームタイトルを取得するとタイトル毎、それ以外のメッセージはタイトル区別なしで取得します。'
+
 // LINE REPLY
 app.post('/callback', (req, res) => {
   var userText = req.body['events'][0]['message']['text'];
   var tweet_log = ['Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.','Tweet dose not exist.'];
-  
-  // SWITCH TITLE
-  switch (userText){
-    case OFFICIAL_URL[0]:
-      tweet_log = tweet_log_fgo;
-      break;
-    case OFFICIAL_URL[1]:
-      tweet_log = tweet_log_azr;
-      break;
-    case OFFICIAL_URL[2]:
-      tweet_log = tweet_log_gbf;
-      break;
-    case OFFICIAL_URL[3]:
-      tweet_log = tweet_log_ff14;
-      break;
-    default:
-      tweet_log = tweet_log_all;
-      break;
+  var replayOptions;
+
+  if(userText == 'ABOUT'){
+// SETTING MESSAGE
+replyOptions = {
+  method: 'POST',
+  uri   : 'https://api.line.me/v2/bot/message/reply',
+  body  : {
+    replyToken: req.body.events[0].replyToken,
+    messages  : [
+      {
+        type : 'text',
+        text : STATUS + ABOUT + HINT
+      }
+    ]
+  },
+  auth: {
+    bearer: CH_ACCESS_TOKEN
+  },
+  json: true
+}
+  }else{
+// SWITCH TITLE
+switch (userText){
+  case OFFICIAL_URL[0]:
+    tweet_log = tweet_log_fgo;
+    break;
+  case OFFICIAL_URL[1]:
+    tweet_log = tweet_log_azr;
+    break;
+  case OFFICIAL_URL[2]:
+    tweet_log = tweet_log_gbf;
+    break;
+  case OFFICIAL_URL[3]:
+    tweet_log = tweet_log_ff14;
+    break;
+  default:
+    tweet_log = tweet_log_all;
+    break;
+}
+
+// SETTING MESSAGE
+replyOptions = {
+  method: 'POST',
+  uri   : 'https://api.line.me/v2/bot/message/reply',
+  body  : {
+    replyToken: req.body.events[0].replyToken,
+    messages  : [
+      {
+        type : 'text',
+        text : tweet_log[0]
+      },
+      {
+        type : 'text',
+        text : tweet_log[1]
+      },
+      {
+        type : 'text',
+        text : tweet_log[2]
+      },
+      {
+        type : 'text',
+        text : tweet_log[3]
+      },
+      {
+        type : 'text',
+        text : tweet_log[4]
+      }
+    ]
+  },
+  auth: {
+    bearer: CH_ACCESS_TOKEN
+  },
+  json: true
+}
   }
+
   
-  // SETTING MESSAGE
-  const replyOptions = {
-    method: 'POST',
-    uri   : 'https://api.line.me/v2/bot/message/reply',
-    body  : {
-      replyToken: req.body.events[0].replyToken,
-      messages  : [
-        {
-          type : 'text',
-          text : tweet_log[0]
-        },
-        {
-          type : 'text',
-          text : tweet_log[1]
-        },
-        {
-          type : 'text',
-          text : tweet_log[2]
-        },
-        {
-          type : 'text',
-          text : tweet_log[3]
-        },
-        {
-          type : 'text',
-          text : tweet_log[4]
-        }
-      ]
-    },
-    auth: {
-      bearer: CH_ACCESS_TOKEN
-    },
-    json: true
-  }
   request(replyOptions, (err, response, body) => {
     console.log(JSON.stringify(response))
   });
