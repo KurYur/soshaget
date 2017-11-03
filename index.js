@@ -45,80 +45,79 @@ app.post('/callback', (req, res) => {
   var replayOptions;
 
   if(userText == 'ABOUT'){
-// SETTING MESSAGE
-replyOptions = {
-  method: 'POST',
-  uri   : 'https://api.line.me/v2/bot/message/reply',
-  body  : {
-    replyToken: req.body.events[0].replyToken,
-    messages  : [
-      {
-        type : 'text',
-        text : STATUS + ABOUT + HINT
-      }
-    ]
-  },
-  auth: {
-    bearer: CH_ACCESS_TOKEN
-  },
-  json: true
-}
+    // SETTING MESSAGE
+    replyOptions = {
+      method: 'POST',
+      uri   : 'https://api.line.me/v2/bot/message/reply',
+      body  : {
+        replyToken: req.body.events[0].replyToken,
+        messages  : [
+          {
+            type : 'text',
+            text : STATUS + ABOUT + HINT
+          }
+        ]
+      },
+      auth: {
+        bearer: CH_ACCESS_TOKEN
+      },
+      json: true
+    }
   }else{
-// SWITCH TITLE
-switch (userText){
-  case OFFICIAL_URL[0]:
-    tweet_log = tweet_log_fgo;
-    break;
-  case OFFICIAL_URL[1]:
-    tweet_log = tweet_log_azr;
-    break;
-  case OFFICIAL_URL[2]:
-    tweet_log = tweet_log_gbf;
-    break;
-  case OFFICIAL_URL[3]:
-    tweet_log = tweet_log_ff14;
-    break;
-  default:
-    tweet_log = tweet_log_all;
-    break;
-}
+    // SWITCH TITLE
+    switch (userText){
+      case OFFICIAL_URL[0]:
+        tweet_log = tweet_log_fgo;
+        break;
+      case OFFICIAL_URL[1]:
+        tweet_log = tweet_log_azr;
+        break;
+      case OFFICIAL_URL[2]:
+        tweet_log = tweet_log_gbf;
+        break;
+      case OFFICIAL_URL[3]:
+        tweet_log = tweet_log_ff14;
+        break;
+      default:
+        tweet_log = tweet_log_all;
+        break;
+    }
 
-// SETTING MESSAGE
-replyOptions = {
-  method: 'POST',
-  uri   : 'https://api.line.me/v2/bot/message/reply',
-  body  : {
-    replyToken: req.body.events[0].replyToken,
-    messages  : [
-      {
-        type : 'text',
-        text : tweet_log[0]
+    // SETTING MESSAGE
+    replyOptions = {
+      method: 'POST',
+      uri   : 'https://api.line.me/v2/bot/message/reply',
+      body  : {
+        replyToken: req.body.events[0].replyToken,
+        messages  : [
+          {
+            type : 'text',
+            text : tweet_log[0]
+          },
+          {
+            type : 'text',
+            text : tweet_log[1]
+          },
+          {
+            type : 'text',
+            text : tweet_log[2]
+          },
+          {
+            type : 'text',
+            text : tweet_log[3]
+          },
+          {
+            type : 'text',
+            text : tweet_log[4]
+          }
+        ]
       },
-      {
-        type : 'text',
-        text : tweet_log[1]
+      auth: {
+        bearer: CH_ACCESS_TOKEN
       },
-      {
-        type : 'text',
-        text : tweet_log[2]
-      },
-      {
-        type : 'text',
-        text : tweet_log[3]
-      },
-      {
-        type : 'text',
-        text : tweet_log[4]
-      }
-    ]
-  },
-  auth: {
-    bearer: CH_ACCESS_TOKEN
-  },
-  json: true
-}
+      json: true
+    }
   }
-
   
   request(replyOptions, (err, response, body) => {
     console.log(JSON.stringify(response))
